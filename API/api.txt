@@ -1,0 +1,31 @@
+REST Framework (REpresentational State Transfer)
+-uses HTTPs to make calls between clients and servers
+
+Most common useful REST based architecture HTTP methods:
+-GET	-PUT	-POST	-DELETE
+
+REST/RESTful API
+-requests and responds information which are objects, not formatted pages
+-it returns a JSON which is the common format. All information are always
+inside curly braces/{}, which looked like a dictionary.
+
+Installing REST
+-pip/pip3 install djangorestframework
+
+Using REST API
+*Let's just use it in django for now
+
+## Setting up the Django project
+-Create your django project and app
+
+-List the appn name (appname.apps.AppnameConfig) and also the 'rest_framework' on your
+settings.py/INSTALLED_APPS
+
+-Make your models and resiter it to admin.py
+
+-Make your super user
+
+## Making serializers
+-On your app, make serializers.py inside it, import:
+from rest_framework import serializers
+from rest_framework import employee
