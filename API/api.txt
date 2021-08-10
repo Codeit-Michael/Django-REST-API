@@ -29,3 +29,56 @@ settings.py/INSTALLED_APPS
 -On your app, make serializers.py inside it, import:
 from rest_framework import serializers
 from rest_framework import employee
+
+-Next make a serialize model class by typing the model name then append serializer:
+class employeeSerializer(serializers.ModelSerializer):
+
+-Inside of your serialized model, type the ff:
+	class Meta:
+		model = employee
+		# you can declare here what model attributes you want to return like:
+		# fields = ('firstname','lastname')
+
+		# except you to return them all:
+		fields = '__all__'
+
+-Now lets make a views and template where we render the data we have. To do that, we
+need to request to the API we create and it returns JSON files (objects).
+First lets import:
+
+# http response for request
+from django.http import HttpResponse
+# if no object, it throws 404
+from django.shortcuts import get_object_or_404
+# for returning an API data
+from rest_framework.views import APIView
+# just like get_object_or_404
+from rest_framework.response import Response
+# sends back the status like login or not
+from rest_framework import status
+# importing model so we can modify its data
+from .models import employee
+# importing our serializer
+from .serializers import employeeSerializer
+
+-Create a class view that takes api views:
+class employeelist(APIView):
+
+-Inside, create a get method and post method:
+
+    # get method - to show the data yo8u already have
+    def get(self,request):
+        employees = employee.objects.all()
+        # 2nd parameter means, it tells we need more than 1 object
+        serializer = employeeSerializer(employees, many = True)
+        # to return the data
+        return Response(serializer.data)
+
+-Lets connect the webapp views to our project urls. Import the ff to connect
+on your views:
+from rest_framework.urlpatterns import format_suffix_patterns
+from webapp import views
+
+-Then at urlpatterns:
+    # it converts the JSON/objects into views
+    path('employee/',views.views.employeelist.as_view())
